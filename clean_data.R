@@ -32,6 +32,9 @@ data <- data[!data$doi %in% not_english, ]
 # if day is missing for published.print or published.online set to 15th
 # what if month also missing? then the date is set to NA
 
+# input:  date_vec: vector of the published date
+#         replacement_day: numeric value to replace the date; default is 15
+# ouput:  data frame with complete date 
 complete_date <- function(date_vec, replacement_day = 15) {
   
   # split into year, month and day
