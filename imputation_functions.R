@@ -34,7 +34,7 @@ delete_obs <- function(data, var_with_missings, percentage){ # delete random obs
 mice_with_diagnostic <- function(data_missings, data_no_NA, rows, var_continuous,
                         m = 5, ...) { # imputes and gives diagnostic plot
 
-  n <- nrow(data_no_NA)
+  n_row <- nrow(data_no_NA)
   
   # impute
   mice_missings <- mice(data_missings, m, ...)
