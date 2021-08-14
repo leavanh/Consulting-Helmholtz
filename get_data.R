@@ -104,12 +104,14 @@ data <- full_join(data, crossref_df, by = "doi") %>%
 
 ## first author and surname of first author (for gender)
 
+# input:  df: data frame
+# output: name of the first author
 author_list <- data$author
 surnames <- lapply(author_list, function(df) {
   name <- subset(df,
-                 df$sequence == "first")$given #get first author
-  if (!any(df$sequence == "first")) name <- df$given #no first
-  if (length(name) > 1) name <- name[1] #if many, give first
+                 df$sequence == "first")$given # get first author
+  if (!any(df$sequence == "first")) name <- df$given # no first
+  if (length(name) > 1) name <- name[1] # if many, give first
   return(name)
 }) 
 # warnings can be ignored 
@@ -123,16 +125,17 @@ data$middle_name <- str_extract(data$surname,
 data$first_name <- str_extract(data$surname,
                                "^[:alpha:]+(?=([^[:alpha:]]|$))")
 
-
+# input:  df: data frame
+# output: name of the first author
 first_authors <- lapply(author_list, function(df) {
   surname <- subset(df,
-                       df$sequence == "first")$given #get first author
-  if (!any(df$sequence == "first")) surname <- df$given #no first
-  if (length(surname) > 1) surname <- surname[1] #if many, give first
+                       df$sequence == "first")$given # get first author
+  if (!any(df$sequence == "first")) surname <- df$given # no first
+  if (length(surname) > 1) surname <- surname[1] # if many, give first
   family_name <- subset(df,
-                        df$sequence == "first")$family #get first author
-  if (!any(df$sequence == "first")) family_name <- df$family #no first
-  if (length(family_name) > 1) family_name <- family_name[1] #if many, give first
+                        df$sequence == "first")$family # get first author
+  if (!any(df$sequence == "first")) family_name <- df$family # no first
+  if (length(family_name) > 1) family_name <- family_name[1] # if many, give first
   name <- paste(surname, family_name, " ")
   return(name)
 })
