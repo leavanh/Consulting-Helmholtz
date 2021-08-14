@@ -1,5 +1,11 @@
 # Functions used for imputation.R
 
+# delete random obs
+# function takes data with missings, a vector containing the variables
+# that should get missings and a vector containing the percentages of
+# values that should get deleted
+# gives back a list containing a list of rows with missing values, the 
+# dataset with artificial missings and the dataset with no missings
 delete_obs <- function(data, var_with_missings, percentage){ # delete random obs
   
   data_no_NA <- na.omit(data)
@@ -16,9 +22,14 @@ delete_obs <- function(data, var_with_missings, percentage){ # delete random obs
               data_no_NA = data_no_NA))
 }
 
+# function takes data with artifical missings, data with no missings,
+# list of rows with missings, a vector containing the continous variables
+# and m = 5 the number of imputations
+# function returns plot of imputed vs true values
 mice_with_diagnostic <- function(data_missings, data_no_NA, rows, var_continuous,
                         m = 5, ...) { # imputes and gives diagnostic plot
-  n_row <- nrow(data_no_NA)
+
+  n <- nrow(data_no_NA)
   
   # impute
   mice_missings <- mice(data_missings, m, ...)
@@ -55,7 +66,12 @@ get_evaluation <- function(imp_eval,
                            start_categorial = 4, end_categorial = 5) { 
   # gives back the correlation and 
   # percentage of right imputed used to 
-  # evaluate the different methods
+  # evaluate the diff methods
+  
+  # function takes mids object containing the imputation, numeric values to
+  # specify where continous and categorical variables are in df
+  # returns vector of mean results
+  
   foreach(i = rows, j = var) %do% {
     data_no_NA[i,j]
   } -> true_value
