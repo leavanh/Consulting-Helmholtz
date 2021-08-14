@@ -23,9 +23,8 @@ source("./modelling.R")
 # A) Frequency distributions
 
 # for citation_count
-frequency_dist_citation_count <- ggplot(data,
-                                                aes(x = citation_count,
-                                                    fill = is_oa)) +
+frequency_dist_citation_count <- ggplot(data, aes(x = citation_count,
+                                                  fill = is_oa)) +
   geom_histogram(binwidth = 1, position = "dodge") +
   scale_fill_manual(values = c("#0072B2", "#56B4E9")) +
   labs(title = "Frequency distribution - citation count",
@@ -40,8 +39,8 @@ ggsave("./Plots/frequency_dist_citation_count.png",
        dpi = 1000)
 
 frequency_dist_citation_count_zoom <- ggplot(data,
-                                        aes(x = citation_count,
-                                            fill = is_oa)) +
+                                             aes(x = citation_count,
+                                                 fill = is_oa)) +
   geom_histogram(binwidth = 1, position = "dodge") +
   xlim(-1, 50) +
   scale_fill_manual(values = c("#0072B2", "#56B4E9")) +

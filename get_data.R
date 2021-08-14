@@ -15,7 +15,7 @@ hmgu_publications <- fread(
 # get all the dois
 
 dois <- hmgu_publications$DOI
-dois <- subset(dois, !(is.na(dois)|dois==""))
+dois <- subset(dois, !(is.na(dois) | dois == ""))
 
 ## get crossref data
 # save as RDS, so it only needs to run once
@@ -85,7 +85,7 @@ hmgu_df[doi == "t10.1017/s0029665120000336"]$doi <- "10.1017/s0029665120000336"
 data <- full_join(hmgu_df, unpaywall_df, by = "doi")
 
 # manually remove duplicate rows
-duplicates <- data[duplicated(data$doi)|duplicated(data$doi, fromLast = TRUE),]
+duplicates <- data[duplicated(data$doi) | duplicated(data$doi, fromLast = TRUE),]
 # View(duplicates)
 data <- filter(data, !doi %in% c("10.15252/embj.2020105696",
                                  "10.15252/emmm.201809466",
@@ -108,8 +108,8 @@ author_list <- data$author
 surnames <- lapply(author_list, function(df) {
   name <- subset(df,
                  df$sequence == "first")$given #get first author
-  if(!any(df$sequence == "first")) name <- df$given #no first
-  if(length(name)>1) name <- name[1] #if many, give first
+  if (!any(df$sequence == "first")) name <- df$given #no first
+  if (length(name) > 1) name <- name[1] #if many, give first
   return(name)
 }) 
 # warnings can be ignored 
@@ -127,12 +127,12 @@ data$first_name <- str_extract(data$surname,
 first_authors <- lapply(author_list, function(df) {
   surname <- subset(df,
                        df$sequence == "first")$given #get first author
-  if(!any(df$sequence == "first")) surname <- df$given #no first
-  if(length(surname)>1) surname <- surname[1] #if many, give first
+  if (!any(df$sequence == "first")) surname <- df$given #no first
+  if (length(surname) > 1) surname <- surname[1] #if many, give first
   family_name <- subset(df,
                         df$sequence == "first")$family #get first author
-  if(!any(df$sequence == "first")) family_name <- df$family #no first
-  if(length(family_name)>1) family_name <- family_name[1] #if many, give first
+  if (!any(df$sequence == "first")) family_name <- df$family #no first
+  if (length(family_name) > 1) family_name <- family_name[1] #if many, give first
   name <- paste(surname, family_name, " ")
   return(name)
 })
@@ -194,7 +194,7 @@ length <- cbind(length1, length2)
 
 length %>% 
   data.frame() %>% 
-  mutate("length" = ifelse(is.na(length1)&is.na(length2), NA, # both NA
+  mutate("length" = ifelse(is.na(length1) & is.na(length2), NA, # both NA
                     ifelse(is.na(length1), length2,  # only length2 has a value
                     ifelse(is.na(length2), length1,  # only length1 has a value
                     ifelse(length1 == length2, length1, # both are the same value

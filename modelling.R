@@ -16,24 +16,24 @@ data_na_omit <- na.omit(data[, c("impact_factor", "references_count",
 
                                     
 # hurdle model with poisson distribution with interaction term:
-# impact_factor*h_index
+# impact_factor * h_index
 hurdle_poi_complete_cases <- hurdle(citation_count ~ oa_status
-                                    + impact_factor*h_index + journal_subject
+                                    + impact_factor * h_index + journal_subject
                                     + references_count + 
                                       offset(log(time_since_pub))
                                     | oa_status
-                                    + impact_factor*h_index + journal_subject
+                                    + impact_factor * h_index + journal_subject
                                     + references_count + time_since_pub, 
                                     dist = "poisson", data = data)
 
 # hurdle model with negative binomial distribution with interaction term:
 # impact_factor*h_index
 hurdle_negbin_complete_cases <- hurdle(citation_count ~ oa_status
-                                       + impact_factor*h_index + journal_subject
+                                       + impact_factor * h_index + journal_subject
                                        + references_count + 
                                          offset(log(time_since_pub))
                                        | oa_status
-                                       + impact_factor*h_index + journal_subject
+                                       + impact_factor * h_index + journal_subject
                                        + references_count + time_since_pub,
                                        dist = "negbin", data = data)
 
@@ -45,12 +45,12 @@ hurdle_negbin_complete_cases <- hurdle(citation_count ~ oa_status
 imp <- readRDS("./Data/imp.RDS")
 
 hurdle_negbin_imputation <- with(imp, hurdle(citation_count ~ oa_status
-                                             + impact_factor*h_index + 
+                                             + impact_factor * h_index + 
                                                journal_subject
                                              + references_count + 
                                                offset(log(time_since_pub))
                                              | oa_status
-                                             + impact_factor*h_index + 
+                                             + impact_factor * h_index + 
                                                journal_subject
                                              + references_count + time_since_pub, 
                                  dist = "negbin"))
@@ -74,8 +74,8 @@ for (i in 1:n_param_count) { # go through all params
   for (j in 1:length(hurdle_negbin_imputation$analyses)) { # go through all imp
     # get coefficient and se
     c <- summary(hurdle_negbin_imputation$analyses[[j]])$coefficients$count[[i]]
-    v <- summary(hurdle_negbin_imputation$analyses[[j]])$coefficients$count[i,2]
-    v <- v*v # calculate variance
+    v <- summary(hurdle_negbin_imputation$analyses[[j]])$coefficients$count[i, 2]
+    v <- v * v # calculate variance
     # save in vectors
     coef <- c(coef, c)
     var <- c(var, v)

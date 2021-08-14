@@ -18,14 +18,14 @@ get_author_url <- function(url) { # get url for first author
     
     # if request was unsuccessful return 1111
     status <- page$status_code
-    if(status != 200) return ("1111")
+    if (status != 200) return("1111")
     
     data <- fromJSON(rawToChar(page$content))
-    author_id <- data$authors[1,]$authorId
-    author_url <- data$authors[1,]$url
+    author_id <- data$authors[1, ]$authorId
+    author_url <- data$authors[1, ]$url
     
     # if url is missing return 2222
-    if(is.na(author_url)) return("2222")
+    if (is.na(author_url)) return("2222")
     
     return(author_url)
 }
@@ -43,20 +43,20 @@ get_h_index <- function(author_url){ # get h-index from author page
 
 # scrape ------------------------------------------------------------------
 
-dois <- readRDS("./Data/dois.RDS")# get dois
+dois <- readRDS("./Data/dois.RDS") # get dois
 
-for(doi in dois) {
+for (doi in dois) {
 
   url <- get_paper_url(doi)
   
   author_url <- get_author_url(url)
   
   # check if first author has an url
-  if(author_url == "1111"){
+  if (author_url == "1111") {
     h_index <- 1111
-  } else if(author_url == "2222"){
+  } else if (author_url == "2222") {
     h_index <- 2222
-  } else if(author_url == "3333"){
+  } else if (author_url == "3333") {
     h_index <- 3333
   } else {
     h_index <- get_h_index(author_url)
