@@ -3,7 +3,8 @@
 # function that deletes random observations of the dataset
 
 # input:  data: data frame with used citation data with missings
-#         var_with_missings: variable character names that contain missings
+#         var_with_missings: vector of characters with variable names that 
+#         contain missings
 #         percentage: vector of percentage of values that should get deleted
 # ouput:  list with list of rows with missing values, the dataset with
 #         artificial missings and the dataset with no missings   
@@ -25,7 +26,7 @@ delete_obs <- function(data, var_with_missings, percentage){ # delete random obs
 
 # function for plotting imputated values versus true values
 # input:  data_missings: data frame with artifical missings
-#         data_no_NA: data framw without missings
+#         data_no_NA: data frame without missings
 #         rows: list of rows with missings
 #         var_continuous: character vector containing the continous variables
 #         m: numeric value of imputations with default 5
