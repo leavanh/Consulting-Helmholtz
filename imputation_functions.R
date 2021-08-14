@@ -1,11 +1,12 @@
 # Functions used for imputation.R
 
-# delete random obs
-# function takes data with missings, a vector containing the variables
-# that should get missings and a vector containing the percentages of
-# values that should get deleted
-# gives back a list containing a list of rows with missing values, the 
-# dataset with artificial missings and the dataset with no missings
+# function that deletes random observations of the dataset
+
+# input:  data: data frame with used citation data with missings
+#         var_with_missings: variable character names that contain missings
+#         percentage: vector of percentage of values that should get deleted
+# ouput:  list with list of rows with missing values, the dataset with
+#         artificial missings and the dataset with no missings   
 delete_obs <- function(data, var_with_missings, percentage){ # delete random obs
   
   data_no_NA <- na.omit(data)
@@ -22,10 +23,13 @@ delete_obs <- function(data, var_with_missings, percentage){ # delete random obs
               data_no_NA = data_no_NA))
 }
 
-# function takes data with artifical missings, data with no missings,
-# list of rows with missings, a vector containing the continous variables
-# and m = 5 the number of imputations
-# function returns plot of imputed vs true values
+# function for plotting imputated values versus true values
+# input:  data_missings: data frame with artifical missings
+#         data_no_NA: data framw without missings
+#         rows: list of rows with missings
+#         var_continuous: character vector containing the continous variables
+#         m: numeric value of imputations with default 5
+# ouput:  plot of imputed vs true values
 mice_with_diagnostic <- function(data_missings, data_no_NA, rows, var_continuous,
                         m = 5, ...) { # imputes and gives diagnostic plot
 
@@ -62,13 +66,19 @@ mice_with_diagnostic <- function(data_missings, data_no_NA, rows, var_continuous
 }
 
 
-# gives back the correlation and 
-# percentage of right imputed used to 
-# evaluate the diff methods
+# function giving back the correlation an percentage of right imputed used to 
+# evaluate the different methods
 
-# function takes mids object containing the imputation, numeric values to
-# specify where continous and categorical variables are in df
-# returns vector of mean results
+# input:  imp_eval: mids object containing the imputation
+#         start_continuous: numeric value specifying the place of continuous 
+#                           variables in df
+#         end_continuous: numeric value specifying the place of continuous 
+#                         variables in df
+#         start_categorial: numeric value specifying the place of categorial
+#                           variables in df
+#         end_categorial: numeric value specifying the place of categorial 
+#                         variables in df
+# ouput:  vector of mean results
 get_evaluation <- function(imp_eval,
                            start_continuous = 1, end_continuous = 3, 
                            start_categorial = 4, end_categorial = 5) { 
@@ -85,14 +95,14 @@ get_evaluation <- function(imp_eval,
       complete(imp_eval, imputation_number)[i, j]
     } -> imp_eval_value
     
-    # continuous
+    # continuous variables
     for (i in start_continuous:end_continuous) {
       test <- cor.test(true_value[[i]], imp_eval_value[[i]])
       correlation <- round(test$estimate, 2)
       p_value <- round(test$p.value, 4)
       correlation_vec <- c(correlation_vec, correlation)
     }
-    # categorical
+    # categorical variables
     for (i in start_categorial:end_categorial) {
       table <- table(true_value[[i]], imp_eval_value[[i]])
       right <- sum(diag(table))
