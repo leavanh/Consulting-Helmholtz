@@ -26,7 +26,7 @@ not_english <- c("10.3238/arztebl.2019.0521", "10.3238/arztebl.2019.0736b",
                  "10.3243/kwe2017.05.001", "10.1055/s-0037-1605651",
                  "10.1055/s-0037-1605817", "10.3238/arztebl.2017.0815")
 
-data <- data[!data$doi %in% not_english,]
+data <- data[!data$doi %in% not_english, ]
 
 
 # if day is missing for published.print or published.online set to 15th
@@ -43,9 +43,9 @@ complete_date <- function(date_vec, replacement_day = 15) {
   day[is.na(day)] <- replacement_day
   
   # add back together
-  date_vec_complete <- str_c(year, month, day, sep = "-") # if no month -> no year
+  date_complete <- str_c(year, month, day, sep = "-") # if no month -> no year
   
-  return(date_vec_complete)
+  return(date_complete)
 }
 
 data$published.online <- complete_date(data$published.online, 15)
