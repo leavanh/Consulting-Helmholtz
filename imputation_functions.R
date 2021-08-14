@@ -61,17 +61,18 @@ mice_with_diagnostic <- function(data_missings, data_no_NA, rows, var_continuous
   }
 }
 
+
+# gives back the correlation and 
+# percentage of right imputed used to 
+# evaluate the diff methods
+
+# function takes mids object containing the imputation, numeric values to
+# specify where continous and categorical variables are in df
+# returns vector of mean results
 get_evaluation <- function(imp_eval,
                            start_continuous = 1, end_continuous = 3, 
                            start_categorial = 4, end_categorial = 5) { 
-  # gives back the correlation and 
-  # percentage of right imputed used to 
-  # evaluate the diff methods
-  
-  # function takes mids object containing the imputation, numeric values to
-  # specify where continous and categorical variables are in df
-  # returns vector of mean results
-  
+
   foreach(i = rows, j = var) %do% {
     data_no_NA[i,j]
   } -> true_value
