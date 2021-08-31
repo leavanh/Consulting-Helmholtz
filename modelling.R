@@ -126,5 +126,5 @@ names(pool_var_zero) <- rownames(summary_zero_1)
 
 # 3. Diagnostic -----------------------------------------------------------
 
-# the rootograms are plotted in the file "plotting.R" and can be found in the
+# the rootograms are plotted in the file "results.R" and can be found in the
 # folder Plots
