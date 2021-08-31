@@ -13,7 +13,7 @@ get_paper_url <- function(doi) { # get right url from doi
 
 get_author_url <- function(url) { # get url for first author
   
-  tryCatch({page <- GET(url)}, finally = return("3333"))
+  page <- GET(url)
 
     
     # if request was unsuccessful return 1111
@@ -56,8 +56,6 @@ for (doi in dois) {
     h_index <- 1111
   } else if (author_url == "2222") {
     h_index <- 2222
-  } else if (author_url == "3333") {
-    h_index <- 3333
   } else {
     h_index <- get_h_index(author_url)
   }
@@ -66,7 +64,4 @@ for (doi in dois) {
   data.table::fwrite(list(output),
                      file = "./Data/h_index.txt",
                      sep = "\n", append = T)
-  # sleep
-  Sys.sleep(sample(1, 1:5))
-
 }
